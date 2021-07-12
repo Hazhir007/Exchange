@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Authentication\LoginController;
+use App\Http\Controllers\API\V1\WelcomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,8 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
 
-Route::post('login', LoginController::class);
+
+Route::get('welcome', WelcomeController::class);
+
