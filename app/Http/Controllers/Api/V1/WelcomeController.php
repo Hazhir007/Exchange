@@ -9,11 +9,6 @@ class WelcomeController extends Controller
 {
     public function __invoke(): JsonResponse
     {
-        $response = [
-            'success' => true,
-            'message' => "Welcome to API version 1",
-        ];
-
-        return response()->json($response, 200);
+        return $this->JsonResponseSuccess("Welcome to API version 1");
     }
 }

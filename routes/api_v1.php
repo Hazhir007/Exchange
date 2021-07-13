@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\V1\Authentication\UserLoginController;
+use App\Http\Controllers\Api\V1\Authentication\UserRegistrationController;
 use App\Http\Controllers\Api\V1\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,7 +21,11 @@ use Illuminate\Support\Facades\Route;
 //});
 
 Route::group(['middleware' => 'cors'], function () {
+
     Route::get('welcome', WelcomeController::class);
+    Route::post('auth/register', UserRegistrationController::class);
+
+    Route::post('auth/login', UserLoginController::class);
+
+
 });
-
-

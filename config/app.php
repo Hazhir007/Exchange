@@ -181,6 +181,11 @@ return [
          */
         Bschmitt\Amqp\AmqpServiceProvider::class,
 
+        /*
+         * passport service provider
+         */
+        Laravel\Passport\PassportServiceProvider::class
+
     ],
 
     /*
@@ -233,7 +238,9 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Amqp' => Bschmitt\Amqp\Facades\Amqp::class
+
+        'Amqp' => Bschmitt\Amqp\Facades\Amqp::class,
+        'Laravel' => Laravel\Passport\PassportServiceProvider::class
     ],
 
 ];

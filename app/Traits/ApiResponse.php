@@ -16,7 +16,7 @@ trait ApiResponse
      *
      * @return JsonResponse
      */
-    protected function JsonResponseSuccess(?string $message = null, ?int $code = 200, $data = null): JsonResponse
+    protected function JsonResponseSuccess(?string $message = null, ?int $code = 200, mixed $data = null): JsonResponse
     {
         if ($data === null && $message ==! null) {
             return response()->json([

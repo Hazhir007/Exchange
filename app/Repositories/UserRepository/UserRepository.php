@@ -31,14 +31,23 @@ class UserRepository implements UserRepositoryInterface
             ->update($data);
     }
 
-    public function delete($id)
+    public function delete(int $id)
     {
         return $this->model->destroy($id);
     }
 
-    public function find($id)
+    public function find(int $id)
     {
         if (null == $user = $this->model->find($id)) {
+            throw new ModelNotFoundException("User not found");
+        }
+
+        return $user;
+    }
+
+    public function findByEmail(string $email)
+    {
+        if (null == $user = $this->model->where('email', $email)) {
             throw new ModelNotFoundException("User not found");
         }
 
