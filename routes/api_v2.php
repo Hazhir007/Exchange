@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\API\V2\WelcomeController;
+use App\Http\Controllers\Api\V2\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
 
