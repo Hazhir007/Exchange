@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
+Route::group(['middleware' => 'cors'], function () {
+    Route::get('welcome', WelcomeController::class);
+});
 
-Route::get('welcome', WelcomeController::class);
 

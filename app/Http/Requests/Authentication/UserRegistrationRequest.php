@@ -6,7 +6,7 @@ use App\Rules\NationalCode;
 use App\Rules\StrongPassword;
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegisterRequest extends FormRequest
+class UserRegistrationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
