@@ -24,9 +24,15 @@ class UserLoginService
     {
         $user = $this->userRepository->findByEmail($userData['email'])->first();
 
-        if (!$user || !Hash::check($userData['password'], $user->password)) {
+        if (! $user || !Hash::check($userData['password'], $user->password)) {
             throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.']
+                'message' => 'The provided credentials are incorrect.',
+            ]);
+        }
+
+        if (! $user->hasVerifiedEmail()) {
+            throw ValidationException::withMessages([
+                'message' => 'please verify your email first',
             ]);
         }
 

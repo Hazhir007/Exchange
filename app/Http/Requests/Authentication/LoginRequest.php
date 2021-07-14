@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Authentication;
 
-use App\Rules\NationalCode;
 use App\Rules\StrongPassword;
 use Illuminate\Foundation\Http\FormRequest;
 
