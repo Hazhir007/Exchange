@@ -4,17 +4,24 @@
 namespace App\Services\Authentication;
 
 
-use Illuminate\Support\Facades\Auth;
+use App\Repositories\UserRepository\UserRepositoryInterface;
 
 class EmailVerificationResendService
 {
-    public function resendEmail(): bool
+    public function __construct(private UserRepositoryInterface $userRepository)
     {
-        if (Auth::user()->hasVerifiedEmail()) {
-            return false;
+
+    }
+
+    public function resendEmail(array $userData): bool
+    {
+        $user = $this->userRepository->findByEmail($userData['email'])->first();
+
+        if ($user && $user->email_verified_at === null) {
+            $user->sendEmailVerificationNotification();
+            return true;
         }
 
-        Auth::user()->sendEmailVerificationNotification();
-        return true;
+        return false;
     }
 }

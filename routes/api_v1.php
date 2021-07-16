@@ -24,18 +24,20 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
+Route::get('welcome', WelcomeController::class);
+
+
 Route::group(['middleware' => 'cors'], function () {
 
     Route::group(['prefix' => '/auth'], function() {
         Route::post('/register', UserRegistrationController::class);
-        Route::post('/login', UserLoginController::class)->middleware('guest');;
-        Route::post('/forgot-password', UserForgotPasswordController::class)->middleware('guest')->name('password.email');
-        Route::post('/reset-password', UserResetPasswordController::class)->middleware('guest')->name('password.reset');
-        Route::get('/email/verify/{id}/{hash}', EmailVerificationController::class)->middleware('auth:api')->name('verification.verify');
-        Route::get('/email/resend', EmailVerificationResendController::class)->name('verification.send');
-//        Route::get('/logout', UserLogoutController::class)->middleware(['auth:api']);
+        Route::post('/login', UserLoginController::class);
+        Route::post('/email/verify', EmailVerificationController::class);
+        Route::post('/email/resend', EmailVerificationResendController::class);
+
+        Route::post('/forgot-password', UserForgotPasswordController::class);
+        Route::post('/reset-password', UserResetPasswordController::class);
+
+//        Route::get('/logout', UserLogoutController::class);
     });
-
-    Route::get('welcome', WelcomeController::class);
-
 });

@@ -5,12 +5,20 @@ namespace App\Services\Authentication;
 
 
 use Illuminate\Support\Facades\Auth;
+use Laravel\Passport\TokenRepository;
 
 class UserLogoutService
 {
-    public function Logout(): bool
+    public function __construct(private TokenRepository $tokenRepository)
     {
-        if (Auth::user()->currentAccessToken()->delete()) {
+
+    }
+
+    public function Logout($tokenId): bool
+    {
+
+//        if (Auth::user()->currentAccessToken()->delete()) {
+        if ($this->tokenRepository->revokeAccessToken($tokenId)) {
             return true;
         }
 

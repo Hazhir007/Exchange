@@ -4,9 +4,6 @@
 namespace App\Services\Authentication;
 
 
-
-
-use App\Models\User;
 use App\Repositories\UserRepository\UserRepositoryInterface;
 use Illuminate\Auth\Events\Verified;
 
@@ -17,11 +14,12 @@ class EmailVerificationService
 
     }
 
-    public function verifyEmail($id): bool
+    public function verifyEmail(array $userData): bool
     {
-        $user = $this->userRepository->find($id);
+        $user = $this->userRepository->findByEmail($userData['email'])->first();
 
-        if (! $user->hasVerifidEmail()) {
+        if ($user && $user->email_verified_at === null &&
+            $user->verification_code === $userData['verification_code']) {
             $user->markEmailAsVerified();
             event(new Verified($user));
             return true;

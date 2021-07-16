@@ -4,7 +4,6 @@
 namespace App\Services\Authentication;
 
 use App\Repositories\UserRepository\UserRepositoryInterface;
-use Illuminate\Validation\ValidationException;
 
 class UserForgotPasswordService
 {
@@ -13,24 +12,24 @@ class UserForgotPasswordService
 
     }
 
-    /**
-     * @throws ValidationException
-     */
-    public function sendResetPasswordEmail(array $userData): array
+    public function sendResetPasswordEmail(array $userData): bool
     {
         $user = $this->userRepository->findByEmail($userData['email'])->first();
 
-        if (! $user) {
-
-            throw ValidationException::withMessages([
-                'message' => 'a user with this email does not exist',
-                'status' => 'error'
-            ]);
-
+        if (! $user || $user->email_verified_at === null) {
+            return false;
         }
 
-        $user->token = $user->createToken('Exchange Personal Access Client')->plainTextToken;
+        $token = hash('sha256', $user->verification_code.$user->email);
 
-        return $user;
+
+        $userData['token'] = $token;
+
+        $user->sendPasswordResetNotification($token);
+        $this->userRepository->saveResetPasswordData($userData);
+
+//        Password::sendResetLink($userData);
+
+        return true;
     }
 }

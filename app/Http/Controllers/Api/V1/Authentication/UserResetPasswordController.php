@@ -17,7 +17,7 @@ class UserResetPasswordController extends Controller
             return $this->JsonResponseSuccess('password has been changed successfully', 200);
         }
 
-        return $this->JsonResponseError('Invalid token provided', 401);
+        return $this->JsonResponseError('User not found or invalid token provided', 401);
 
     }
 }

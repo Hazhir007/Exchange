@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Notifications\UserEmailVerifyNotification;
+use App\Notifications\UserForgotPasswordNotification;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,13 +11,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, CanResetPassword;
 
+    private static string $verificationCode;
     /**
      * The attributes that are mass assignable.
      *
@@ -24,7 +26,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'email',
         'phone',
-        'password',
+        'password'
     ];
 
     /**
@@ -46,17 +48,38 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Overriding the default email verification notification
+     *
+     * @return void
+     * @throws \Exception
+     */
+    public function sendEmailVerificationNotification(): void
+    {
+        $this->notify(new UserEmailVerifyNotification(self::$verificationCode));
+        $this->verification_code = self::$verificationCode;
+        $this->save();
+    }
+
+    public function sendPasswordResetNotification($token): void
+    {
+        $this->notify(new UserForgotPasswordNotification($this->verification_code));
+        $this->verification_code = self::$verificationCode;
+        $this->save();
+    }
 
     /**
      * Hashing the user password before creating the user
      *
      * @return void
+     * @throws \Exception
      */
-    public static function boot()
+    public static function boot(): void
     {
+        self::$verificationCode = random_int(111111, 999999);
         parent::boot();
         static::creating(function ($user) {
-            $user->password = Hash::make($user->password);
+            $user->password = bcrypt($user->password);
         });
     }
 

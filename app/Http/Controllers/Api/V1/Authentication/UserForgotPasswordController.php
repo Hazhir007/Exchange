@@ -6,18 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Authentication\ForgotPasswordRequest;
 use App\Services\Authentication\UserForgotPasswordService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Validation\ValidationException;
 
 class UserForgotPasswordController extends Controller
 {
-    /**
-     * @throws ValidationException
-     */
-    public function __invoke(UserForgotPasswordService $forgotPasswordService,
+    public function __invoke(UserForgotPasswordService $service,
                              ForgotPasswordRequest $request): JsonResponse
     {
         $validatedRequest = $request->validated();
-        $forgotPasswordService->sendResetPasswordEmail($validatedRequest);
-        return $this->JsonResponseSuccess('reset password mail has been sent successfully', 200);
+
+        if ($service->sendResetPasswordEmail($validatedRequest)) {
+            return $this->JsonResponseSuccess('reset password mail has been sent successfully');
+        }
+        return $this->JsonResponseError('please provide the right token');
     }
 }

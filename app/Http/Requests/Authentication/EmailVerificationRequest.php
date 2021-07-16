@@ -9,19 +9,26 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest as BaseEmailVerification
 
 class EmailVerificationRequest extends BaseEmailVerificationRequest
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
     public function authorize(): bool
     {
-        $user = User::query()->findOrFail($this->route('id'));
-
-        if (!hash_equals((string)$this->route('hash'),
-            sha1($user->getEmailForVerification()))) {
-            return false;
-        }
-
-        $this->setUserResolver(function () use ($user) {
-            return $user;
-        });
-
         return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules(): array
+    {
+        return [
+            'email' => ['required', 'email', 'max:255'],
+            'verification_code' => ['required', 'digits:6']
+        ];
     }
 }

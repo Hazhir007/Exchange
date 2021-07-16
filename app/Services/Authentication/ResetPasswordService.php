@@ -4,35 +4,35 @@
 namespace App\Services\Authentication;
 
 
-use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Str;
+use App\Repositories\UserRepository\UserRepositoryInterface;
 
 class ResetPasswordService
 {
-    public function __construct()
+    public function __construct(private UserRepositoryInterface $userRepository)
     {
 
     }
 
     public function updatePassword(array $userData): bool
     {
-        $result = Password::reset(
-            $validatedRequest,
-            function ($user, $password) use ($userData) {
-                $user->forceFill(
-                    ['password' => bcrypt($userData['password'])]
-                )->setRememberToken(Str::random(60));
+        $user = $this->userRepository->findByEmail($userData['email'])->first();
 
-                $user->save();
+        if ($user) {
+            $resetRequestedUser = $this->userRepository->getResetPasswordData($user->email)->first();
+            if ($resetRequestedUser &&
+                $resetRequestedUser->email === $user->email &&
+                $resetRequestedUser->token ===  hash('sha256', $userData['verification_code'].$resetRequestedUser->email)) {
 
-                event(new PasswordReset($user));
+                $data['email'] = $resetRequestedUser->email;
+
+                $data['password'] = $userData['password'];
+                $this->userRepository->updatePassword($data);
+                $this->userRepository->deletePasswordResetToken($resetRequestedUser->email);
+//                event(new PasswordReset($user));
+                return true;
             }
-        );
-        if ($result == Password::INVALID_TOKEN) {
             return false;
         }
-
-        return true;
+        return false;
     }
 }

@@ -4,10 +4,8 @@
 namespace App\Services\Authentication;
 
 
-use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Repositories\UserRepository\UserRepositoryInterface;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
 class UserLoginService
@@ -24,7 +22,8 @@ class UserLoginService
     {
         $user = $this->userRepository->findByEmail($userData['email'])->first();
 
-        if (! $user || !Hash::check($userData['password'], $user->password)) {
+
+        if (! $user || !password_verify($userData['password'], $user->password)) {
             throw ValidationException::withMessages([
                 'message' => 'The provided credentials are incorrect.',
             ]);
