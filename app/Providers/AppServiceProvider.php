@@ -9,10 +9,12 @@ use App\Domain\Money\Factory\MoneyFactory;
 use App\Domain\Money\Factory\MoneyFactoryInterface;
 use App\Domain\Money\Money;
 use App\Domain\Money\MoneyInterface;
+use App\Domain\Payment\BankPaymentGateway;
+use App\Domain\Payment\PaymentGatewayInterface;
 use App\Repositories\UserRepository\UserRepository;
 use App\Repositories\UserRepository\UserRepositoryInterface;
-use App\Services\MoneyConverter\MoneyConverter;
-use App\Services\MoneyConverter\MoneyConverterInterface;
+use App\Services\MoneyConverter\MoneyConverterServiceService;
+use App\Services\MoneyConverter\MoneyConverterServiceInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -47,9 +49,19 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
-            MoneyConverterInterface::class,
-            MoneyConverter::class
+            MoneyConverterServiceInterface::class,
+            MoneyConverterServiceService::class
         );
+
+        $this->app->singleton(
+            PaymentGatewayInterface::class,
+            BankPaymentGateway::class
+        );
+
+//        $this->app->bind(
+//            'USD', function ($app) {
+//                return new USD(new MoneyFactory(new Money(new Currency(), null), new Currency()));
+//        });
 
         $this->app->bind(
             'USD',

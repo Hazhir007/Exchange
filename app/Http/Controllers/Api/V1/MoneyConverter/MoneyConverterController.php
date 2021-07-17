@@ -5,12 +5,13 @@ namespace App\Http\Controllers\Api\V1\MoneyConverter;
 
 
 use App\Domain\Money\Factory\MoneyFactoryInterface;
-use App\Services\MoneyConverter\MoneyConverterInterface;
+use App\Http\Controllers\Controller;
+use App\Services\MoneyConverter\MoneyConverterServiceInterface;
 use Illuminate\Http\Request;
 
-class MoneyConverterController
+class MoneyConverterController extends Controller
 {
-    public function __invoke(MoneyConverterInterface $moneyConverter, Request $request): void
+    public function __invoke(MoneyConverterServiceInterface $moneyConverter, Request $request): void
     {
 //        $fromCurrency = new ('App\Domain\Money\Factory\Currencies\\'.strtoupper($request->from_currency))();
 //        $toCurrency = new ('App\Domain\Money\Factory\Currencies\\'.strtoupper($request->to_currency))();
