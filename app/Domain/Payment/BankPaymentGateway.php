@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 class BankPaymentGateway implements PaymentGatewayInterface
 {
 
-    public function __construct(private Currency $currency, private MoneyInterface $money)
+    public function __construct(private MoneyInterface $money)
     {
 
     }
@@ -25,7 +25,7 @@ class BankPaymentGateway implements PaymentGatewayInterface
         return [
             'amount' => $this->money->getAmount(),
             'confirmation_number' => Str::random(),
-            'currency' => $this->currency
+            'currency' => $this->money->getCurrency()
         ];
     }
 }

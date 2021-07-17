@@ -11,6 +11,7 @@ use App\Domain\Money\Money;
 use App\Domain\Money\MoneyInterface;
 use App\Domain\Payment\BankPaymentGateway;
 use App\Domain\Payment\PaymentGatewayInterface;
+use App\Domain\Payment\WalletPaymentGateway;
 use App\Repositories\UserRepository\UserRepository;
 use App\Repositories\UserRepository\UserRepositoryInterface;
 use App\Services\MoneyConverter\MoneyConverterServiceService;
@@ -54,9 +55,13 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->singleton(
-            PaymentGatewayInterface::class,
-            BankPaymentGateway::class
-        );
+            PaymentGatewayInterface::class, function ($app) {
+                if (request()?->has('wallet')) {
+                    return new WalletPaymentGateway();
+                }
+
+                return new BankPaymentGateway();
+        });
 
 //        $this->app->bind(
 //            'USD', function ($app) {
