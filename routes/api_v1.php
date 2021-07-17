@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\V1\Authentication\UserLoginController;
 use App\Http\Controllers\Api\V1\Authentication\UserLogoutController;
 use App\Http\Controllers\Api\V1\Authentication\UserRegistrationController;
 use App\Http\Controllers\Api\V1\Authentication\UserResetPasswordController;
+use App\Http\Controllers\Api\V1\MoneyConverter\MoneyConverterController;
 use App\Http\Controllers\Api\V1\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,5 +39,9 @@ Route::group(['middleware' => 'cors'], function () {
         Route::post('/forgot-password', UserForgotPasswordController::class);
         Route::post('/reset-password', UserResetPasswordController::class);
         Route::post('/logout', UserLogoutController::class);
+    });
+
+    Route::group(['prefix' => '/currency-conversion'], function() {
+        Route::post('/convert', MoneyConverterController::class);
     });
 });
