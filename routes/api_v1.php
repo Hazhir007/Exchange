@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\V1\Authentication\EmailVerificationController;
 use App\Http\Controllers\Api\V1\Authentication\EmailVerificationResendController;
 use App\Http\Controllers\Api\V1\Authentication\UserForgotPasswordController;
 use App\Http\Controllers\Api\V1\Authentication\UserLoginController;
+use App\Http\Controllers\Api\V1\Authentication\UserLogoutController;
 use App\Http\Controllers\Api\V1\Authentication\UserRegistrationController;
 use App\Http\Controllers\Api\V1\Authentication\UserResetPasswordController;
 use App\Http\Controllers\Api\V1\WelcomeController;
@@ -34,10 +35,8 @@ Route::group(['middleware' => 'cors'], function () {
         Route::post('/login', UserLoginController::class);
         Route::post('/email/verify', EmailVerificationController::class);
         Route::post('/email/resend', EmailVerificationResendController::class);
-
         Route::post('/forgot-password', UserForgotPasswordController::class);
         Route::post('/reset-password', UserResetPasswordController::class);
-
-//        Route::get('/logout', UserLogoutController::class);
+        Route::post('/logout', UserLogoutController::class);
     });
 });

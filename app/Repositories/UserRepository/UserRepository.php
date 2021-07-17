@@ -73,7 +73,12 @@ class UserRepository implements UserRepositoryInterface
             DB::table('password_resets')
                 ->where('email', $resetRequestedUser->email)
                 ->update(['token' => $userData['token']]);
+        } else {
+            DB::table('password_resets')
+                ->insert(['email' => $userData['email'], 'token' => $userData['token'], 'created_at' => now()]);
         }
+
+
     }
 
     public function getResetPasswordData(string $email)

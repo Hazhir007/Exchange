@@ -16,7 +16,6 @@ class UserRegistrationService
     public function register(array $userData)
     {
         $user = $this->userRepository->create($userData);
-        $user->token = $user->createToken('Exchange Personal Access Client')->accessToken;
         event(new Registered($user));
         return $user->refresh();
     }

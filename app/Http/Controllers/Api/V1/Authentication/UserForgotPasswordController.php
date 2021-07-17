@@ -17,6 +17,6 @@ class UserForgotPasswordController extends Controller
         if ($service->sendResetPasswordEmail($validatedRequest)) {
             return $this->JsonResponseSuccess('reset password mail has been sent successfully');
         }
-        return $this->JsonResponseError('please provide the right token');
+        return $this->JsonResponseError('please verify your email first');
     }
 }
