@@ -9,8 +9,13 @@ use App\Domain\Money\MoneyInterface;
 
 class IRR
 {
-    public function create(?int $amount, MoneyFactoryInterface $moneyFactory): MoneyInterface
+    public function __construct(private MoneyFactoryInterface $moneyFactory)
     {
-        return $moneyFactory->create('Iranian Rial', 'IRR', 0, $amount);
+
+    }
+
+    public function create(int $amount, ?string $from): MoneyInterface
+    {
+        return $this->moneyFactory->create('Iranian Rial', 'IRR', 0, $amount, $from);
     }
 }

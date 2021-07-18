@@ -4,27 +4,23 @@
 namespace App\Http\Controllers\Api\V1\MoneyConverter;
 
 
-use App\Domain\Money\Factory\MoneyFactoryInterface;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CurrencyConverterResources\CurrencyConverterResource;
 use App\Services\MoneyConverter\MoneyConverterServiceInterface;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class MoneyConverterController extends Controller
 {
-    public function __invoke(MoneyConverterServiceInterface $moneyConverter, Request $request): void
+    public function __invoke(MoneyConverterServiceInterface $moneyConverter, Request $request): JsonResponse
     {
-//        $fromCurrency = new ('App\Domain\Money\Factory\Currencies\\'.strtoupper($request->from_currency))();
-//        $toCurrency = new ('App\Domain\Money\Factory\Currencies\\'.strtoupper($request->to_currency))();
         $fromCurrency = resolve(strtoupper($request->from_currency));
-        dd($fromCurrency->create());
         $toCurrency = resolve(strtoupper($request->to_currency));
-//        dd($fromCurrency);
-//        $toCurrency = resolve('EUR');
-//        $fromCurrency->create(100);
-//        dd($toCurrency);
-        $fromCurrency->create(100);
-        $toCurrency->create(0);
-        $result = $moneyConverter->convert($fromCurrency, $toCurrency, 0.85, 0.001);
-        dd($result);
+        $usd = $fromCurrency->create($request->amount, 'user');
+        $eur = $toCurrency->create(0, null);
+        $result = $moneyConverter->convert($usd, $eur, 0.85, 0.001);
+
+        return $this->JsonResponseSuccess('your order request has been submitted',
+            200, new CurrencyConverterResource($result));
     }
 }

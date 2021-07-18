@@ -8,7 +8,7 @@ use App\Domain\Currency\CurrencyInterface;
 
 interface MoneyInterface
 {
-    public function setAmount(?int $amount);
+    public function setAmount(int $amount, ?string $from);
 
     public function getAmount(): int;
 

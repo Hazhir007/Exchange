@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\V1\Authentication\UserLoginController;
 use App\Http\Controllers\Api\V1\Authentication\UserLogoutController;
 use App\Http\Controllers\Api\V1\Authentication\UserRegistrationController;
 use App\Http\Controllers\Api\V1\Authentication\UserResetPasswordController;
+use App\Http\Controllers\Api\V1\ExternalApi\NavasanApiController;
 use App\Http\Controllers\Api\V1\MoneyConverter\MoneyConverterController;
 use App\Http\Controllers\Api\V1\PayOrder\PayOrderController;
 use App\Http\Controllers\Api\V1\WelcomeController;
@@ -47,4 +48,6 @@ Route::group(['middleware' => 'cors'], function () {
     });
 
     Route::get('pay', PayOrderController::class);
+
+    Route::get('get-pairs-price', NavasanApiController::class);
 });

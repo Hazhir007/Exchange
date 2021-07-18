@@ -184,7 +184,13 @@ return [
         /*
          * passport service provider
          */
-        Laravel\Passport\PassportServiceProvider::class
+        Laravel\Passport\PassportServiceProvider::class,
+
+
+        /*
+         * Currency Service Provider
+         */
+        App\Providers\CurrencyServiceProvider::class
 
     ],
 

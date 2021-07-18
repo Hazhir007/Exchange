@@ -50,7 +50,7 @@ class Currency implements CurrencyInterface
      */
     public function sameAs(Currency $otherCurrency): bool
     {
-        return $this->code === $otherCurrency->code;
+        return $this->code === $otherCurrency->getCode();
     }
 
 }

@@ -8,14 +8,44 @@ use App\Domain\Currency\CurrencyInterface;
 
 class Money implements MoneyInterface
 {
-    public function __construct(protected CurrencyInterface $currency, protected ?int $amount)
+    private int $amount;
+
+    private float $formattedAmount;
+
+    private float $trueAmount;
+
+    public function __construct(private CurrencyInterface $currency)
     {
 
     }
 
-    public function setAmount(?int $amount)
+    public function setTrueAmount(float $amount)
     {
-        $this->amount = $amount;
+        $this->trueAmount = $amount / (10**$this->currency->getScale());
+    }
+
+    public function getTrueAmount(float $amount): float
+    {
+        return $this->trueAmount;
+    }
+
+    public function setAmount(int $amount, ?string $from = null)
+    {
+        if ($from === 'user') {
+            $this->amount = $amount * (10**$this->currency->getScale());
+        } else {
+            $this->amount = $amount;
+        }
+    }
+
+    public function setFormattedAmount(float $formattedAmount)
+    {
+        $this->formattedAmount = $formattedAmount;
+    }
+
+    public function getFormattedAmount(int $amount): float
+    {
+        return ( $this->formattedAmount = $amount / (10**$this->currency->getScale()) );
     }
 
     public function getAmount(): int
@@ -35,7 +65,7 @@ class Money implements MoneyInterface
 
     public function equals(Money $other): bool
     {
-        if ($this->currency !== $other->currency) {
+        if ($this->currency !== $other->getCurrency()) {
             return false;
         }
 

@@ -9,8 +9,13 @@ use App\Domain\Money\MoneyInterface;
 
 class USD
 {
-    public function create(?int $amount, MoneyFactoryInterface $money): MoneyInterface
+    public function __construct(private MoneyFactoryInterface $money)
     {
-        return $money->create('US Dollar', 'USD', 2, $amount);
+
+    }
+
+    public function create(int $amount, ?string $from): MoneyInterface
+    {
+        return $this->money->create('US Dollar', 'USD', 2, $amount, $from);
     }
 }

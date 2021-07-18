@@ -9,7 +9,7 @@ use App\Domain\Money\MoneyInterface;
 
 interface MoneyFactoryInterface
 {
-    public function __construct(MoneyInterface $money, CurrencyInterface $currency);
+    public function __construct();
 
-    public function create(string $name, string $code, int $scale, ?int $amount): MoneyInterface;
+    public function create(string $name, string $code, int $scale, ?int $amount, ?string $from): MoneyInterface;
 }

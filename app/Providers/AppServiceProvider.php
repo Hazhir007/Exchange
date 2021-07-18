@@ -4,6 +4,10 @@ namespace App\Providers;
 
 use App\Domain\Currency\Currency;
 use App\Domain\Currency\CurrencyInterface;
+use App\Domain\ExternalApi\ExchangeExternalApiInterface;
+use App\Domain\ExternalApi\NavasanApi\NavasanApi;
+use App\Domain\Money\Factory\Currencies\EUR;
+use App\Domain\Money\Factory\Currencies\IRR;
 use App\Domain\Money\Factory\Currencies\USD;
 use App\Domain\Money\Factory\MoneyFactory;
 use App\Domain\Money\Factory\MoneyFactoryInterface;
@@ -27,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+
         $this->app->bind(
             UserRepositoryInterface::class,
             UserRepository::class
@@ -54,30 +59,42 @@ class AppServiceProvider extends ServiceProvider
             MoneyConverterServiceService::class
         );
 
-        $this->app->singleton(
-            PaymentGatewayInterface::class, function ($app) {
-                if (request()?->has('wallet')) {
-                    return new WalletPaymentGateway();
-                }
-
-                return new BankPaymentGateway();
-        });
-
-//        $this->app->bind(
-//            'USD', function ($app) {
-//                return new USD(new MoneyFactory(new Money(new Currency(), null), new Currency()));
+//        $this->app->singleton(
+//            PaymentGatewayInterface::class, function ($app) {
+//                if (request()?->has('wallet')) {
+//                    return new WalletPaymentGateway();
+//                }
+//
+//                return new BankPaymentGateway();
 //        });
 
-        $this->app->bind(
-            'USD',
-            USD::class
-        );
+//        $this->app->bind(
+//            'USD',
+//            USD::class
+//        );
+
+//        $this->app->bind(
+//            'EUR',
+//            EUR::class
+//        );
+
+        // Service Provider
+        $this->app->bind('USD', function ($app) {
+                return new USD(new MoneyFactory());
+        });
+
+        $this->app->bind('EUR', function ($app) {
+            return new EUR(new MoneyFactory());
+        });
+
+        $this->app->bind('IRR', function ($app) {
+            return new IRR(new MoneyFactory());
+        });
 
         $this->app->bind(
-            'EUR',
-            USD::class
+            ExchangeExternalApiInterface::class,
+            NavasanApi::class
         );
-
     }
 
     /**

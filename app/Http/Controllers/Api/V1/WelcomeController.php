@@ -9,6 +9,7 @@ class WelcomeController extends Controller
 {
     public function __invoke(): JsonResponse
     {
+//        dd('ok');
         return $this->JsonResponseSuccess("Welcome to API version 1");
     }
 }

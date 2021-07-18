@@ -35,7 +35,7 @@ class UserLoginService
             ]);
         }
 
-        $user->token = $user->createToken('Exchange Personal Access Client')->accessToken;
+        $user->token = $user->createToken('Exchange Personal Access ClientRequest')->accessToken;
 
         return $user;
     }

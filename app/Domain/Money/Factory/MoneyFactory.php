@@ -4,14 +4,21 @@
 namespace App\Domain\Money\Factory;
 
 
-use App\Domain\Currency\CurrencyInterface;
+use App\Domain\Currency\Currency;
+use App\Domain\Money\Money;
 use App\Domain\Money\MoneyInterface;
 
 class MoneyFactory implements MoneyFactoryInterface
 {
-    public function __construct(private MoneyInterface $money, private CurrencyInterface $currency)
-    {
 
+    private Currency $currency;
+    private Money $money;
+
+
+    public function __construct()
+    {
+        $this->currency = new Currency();
+        $this->money = new Money($this->currency);
     }
 
     /**
@@ -21,13 +28,13 @@ class MoneyFactory implements MoneyFactoryInterface
      * @param int|null $amount
      * @return MoneyInterface
      */
-    public function create(string $name, string $code, int $scale, ?int $amount): MoneyInterface
+    public function create(string $name, string $code, int $scale, ?int $amount, ?string $from): MoneyInterface
     {
         $this->currency->setName($name);
         $this->currency->setCode($code);
         $this->currency->setScale($scale);
         $this->money->setCurrency($this->currency);
-        $this->money->setAmount($amount);
+        $this->money->setAmount($amount, $from);
         return $this->money;
     }
 }
