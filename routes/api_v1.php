@@ -10,23 +10,16 @@ use App\Http\Controllers\Api\V1\Authentication\UserResetPasswordController;
 use App\Http\Controllers\Api\V1\ExternalApi\NavasanApiController;
 use App\Http\Controllers\Api\V1\MoneyConverter\MoneyConverterController;
 use App\Http\Controllers\Api\V1\PayOrder\PayOrderController;
+use App\Http\Controllers\Api\V1\Wallet\DepositWalletController;
+use App\Http\Controllers\Api\V1\Wallet\WithdrawWalletController;
 use App\Http\Controllers\Api\V1\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
 
-//Route::middleware('auth:api')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
+
+
+
+
 
 Route::get('welcome', WelcomeController::class);
 
@@ -43,11 +36,18 @@ Route::group(['middleware' => 'cors'], function () {
         Route::post('/logout', UserLogoutController::class);
     });
 
-    Route::group(['prefix' => '/currency-conversion'], function() {
-        Route::post('/convert', MoneyConverterController::class);
+
+    Route::group(['middleware' => 'auth:api'], function () {
+
+        Route::post('/currency-conversion/convert', MoneyConverterController::class);
+
+        Route::post('/order/pay', PayOrderController::class);
+
+        Route::post('/wallet/deposit', DepositWalletController::class);
+        Route::get('/wallet/withdraw', WithdrawWalletController::class);
+
+        Route::get('/external-api/get-conversion-price', NavasanApiController::class);
     });
 
-    Route::get('pay', PayOrderController::class);
 
-    Route::get('get-pairs-price', NavasanApiController::class);
 });

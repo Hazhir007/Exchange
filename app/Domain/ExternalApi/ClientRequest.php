@@ -25,7 +25,6 @@ class ClientRequest
      */
     public function getRequest(string $uri): string
     {
-        dd(json_decode($this->client->request('GET', $uri, $this->options)->getBody()->getContents()));
         return $this->client->request('GET', $uri, $this->options)->getBody()->getContents();
     }
 
