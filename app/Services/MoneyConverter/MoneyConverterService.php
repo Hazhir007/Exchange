@@ -6,10 +6,11 @@ namespace App\Services\MoneyConverter;
 
 use App\Domain\Money\MoneyInterface;
 
-class MoneyConverterServiceService implements MoneyConverterServiceInterface
+class MoneyConverterService implements MoneyConverterServiceInterface
 {
-    public function convert(MoneyInterface $fromCurrency, MoneyInterface $toCurrency,
-                            int|float $conversionRatio, int|float $fee): MoneyInterface
+//    public function convert(MoneyInterface $fromCurrency, MoneyInterface $toCurrency,
+//                            int|float $conversionRatio, int|float $fee): MoneyInterface
+    public function convert(MoneyInterface $fromCurrency, MoneyInterface $toCurrency, ): MoneyInterface
     {
         if ($fromCurrency->getCurrency()->sameAs($toCurrency->getCurrency()))  {
             throw new \InvalidArgumentException('Currencies must not be identical');

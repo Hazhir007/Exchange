@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Api\V1\ExternalApi;
 
-use App\Domain\ExternalApi\ExchangeExternalApiInterface;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Services\GetPairConversionRatio\Navasan\UpdatePairCurrencyConversionTableService;
 
 class NavasanApiController extends Controller
 {
-    public function __invoke(ExchangeExternalApiInterface $api)
+    public function __invoke(UpdatePairCurrencyConversionTableService $service)
     {
-        return $api->getPriceList();
+        return $service->updateTable();
     }
 }

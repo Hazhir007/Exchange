@@ -46,8 +46,10 @@ Route::group(['middleware' => 'cors'], function () {
         Route::post('/wallet/deposit', DepositWalletController::class);
         Route::get('/wallet/withdraw', WithdrawWalletController::class);
 
-        Route::get('/external-api/get-conversion-price', NavasanApiController::class);
+
     });
+
+    Route::get('/external-api/get-conversion-price', NavasanApiController::class);
 
 
 });

@@ -190,8 +190,13 @@ return [
         /*
          * Currency Service Provider
          */
-        App\Providers\CurrencyServiceProvider::class
+        App\Providers\CurrencyServiceProvider::class,
 
+
+        /*
+         * Repository Service Provider
+         */
+        App\Providers\RepositoryServiceProvider::class,
     ],
 
     /*

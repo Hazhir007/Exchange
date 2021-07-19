@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ExchangeFee extends Model
+class PairCurrency extends Model
 {
     use HasFactory;
 
@@ -16,6 +16,9 @@ class ExchangeFee extends Model
      */
     protected $fillable = [
         'pair',
+        'from_currency',
+        'to_currency',
+        'conversion_ratio',
         'fee',
     ];
 }

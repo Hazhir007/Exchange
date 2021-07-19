@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Notifications\UserEmailVerifyNotification;
 use App\Notifications\UserForgotPasswordNotification;
+use Exception;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -50,7 +51,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * Overriding the default email verification notification
      *
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function sendEmailVerificationNotification(): void
     {
@@ -70,7 +71,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * Hashing the user password before creating the user
      *
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public static function boot(): void
     {

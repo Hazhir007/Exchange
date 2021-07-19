@@ -110,4 +110,9 @@ class UserRepository implements UserRepositoryInterface
 
     }
 
+    public function addOrder(array $orderData)
+    {
+        $this->model->orders()->create($orderData);
+    }
+
 }

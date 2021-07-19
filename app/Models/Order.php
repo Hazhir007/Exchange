@@ -18,4 +18,6 @@ class Order extends Model
         'trackingId',
         'status'
     ];
+
+
 }

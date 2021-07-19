@@ -1,19 +1,19 @@
 <?php
 
 
-namespace App\Services\PayOrder;
+namespace App\Services\Order;
 
 
 use App\Repositories\UserRepository\UserRepositoryInterface;
 
-class PayOrderService
+class AddOrder
 {
     public function __construct(private UserRepositoryInterface $user)
     {
 
     }
 
-    public function pay()
+    public function addOrder()
     {
 
     }

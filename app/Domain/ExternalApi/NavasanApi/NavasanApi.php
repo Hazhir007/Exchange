@@ -8,11 +8,10 @@ use App\Domain\ExternalApi\ClientRequest;
 
 use App\Domain\ExternalApi\ExchangeExternalApiInterface;
 use GuzzleHttp\Exception\GuzzleException;
-use Psr\Http\Message\ResponseInterface;
 
 class NavasanApi implements ExchangeExternalApiInterface
 {
-    const BASE_API_URI = 'https://api.navasan.tech/latest?api_key=JgVoQBY2gvyTzYH4tfgdBZa3CdY1TgQ4';
+    const BASE_API_URI = 'https://api.navasan.tech/latest?api_key=JgVoQBY2gvyTzYH4tfgdBZa3CdY1TgQ4&';
 
     public function __construct(private ClientRequest $client)
     {

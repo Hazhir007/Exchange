@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Domain\Currency\Currency;
 use App\Domain\Currency\CurrencyInterface;
+use App\Domain\ExternalApi\ClientRequest;
 use App\Domain\ExternalApi\ExchangeExternalApiInterface;
 use App\Domain\ExternalApi\NavasanApi\NavasanApi;
 use App\Domain\Money\Factory\Currencies\EUR;
@@ -13,13 +14,15 @@ use App\Domain\Money\Factory\MoneyFactory;
 use App\Domain\Money\Factory\MoneyFactoryInterface;
 use App\Domain\Money\Money;
 use App\Domain\Money\MoneyInterface;
-use App\Domain\Payment\BankPaymentGateway;
-use App\Domain\Payment\PaymentGatewayInterface;
-use App\Domain\Payment\WalletPaymentGateway;
+use App\Models\PairCurrency;
+use App\Models\User;
+use App\Repositories\PairCurrencyRepository\PairCurrencyRepository;
 use App\Repositories\UserRepository\UserRepository;
-use App\Repositories\UserRepository\UserRepositoryInterface;
-use App\Services\MoneyConverter\MoneyConverterServiceService;
+use App\Services\GetPairConversionRatio\Navasan\ReturnStructuredResult;
+use App\Services\GetPairConversionRatio\Navasan\UpdatePairCurrencyConversionTableService;
+use App\Services\MoneyConverter\MoneyConverterService;
 use App\Services\MoneyConverter\MoneyConverterServiceInterface;
+use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -31,13 +34,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
-        $this->app->bind(
-            UserRepositoryInterface::class,
-            UserRepository::class
-        );
-
-
         $this->app->bind(
             MoneyInterface::class,
             Money::class
@@ -56,8 +52,22 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(
             MoneyConverterServiceInterface::class,
-            MoneyConverterServiceService::class
+            MoneyConverterService::class
         );
+
+        $this->app->bind(
+            ExchangeExternalApiInterface::class,
+            NavasanApi::class
+        );
+
+//        $this->app->bind(
+//            'UpdatePairCurrencyConversionTableService',
+//            UpdatePairCurrencyConversionTableService::class
+//        );
+
+//        $this->app->bind('UpdatePairCurrencyConversionTableService', function ($app) {
+//            return new UpdatePairCurrencyConversionTableService(new PairCurrencyRepository(new PairCurrency()), new ReturnStructuredResult(new NavasanApi(new ClientRequest(new Client()))));
+//        });
 
 //        $this->app->singleton(
 //            PaymentGatewayInterface::class, function ($app) {
@@ -91,10 +101,7 @@ class AppServiceProvider extends ServiceProvider
             return new IRR(new MoneyFactory());
         });
 
-        $this->app->bind(
-            ExchangeExternalApiInterface::class,
-            NavasanApi::class
-        );
+
     }
 
     /**
