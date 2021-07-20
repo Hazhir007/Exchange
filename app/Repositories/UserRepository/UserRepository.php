@@ -5,6 +5,7 @@ namespace App\Repositories\UserRepository;
 
 
 use App\Models\User;
+use App\Repositories\WalletRepository\WalletRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -115,4 +116,10 @@ class UserRepository implements UserRepositoryInterface
         $this->model->orders()->create($orderData);
     }
 
+    public function getWallets(int $userId, string $currencyCode)
+    {
+        return $this->model->wallets()
+            ->where('user_id', $userId)
+            ->where('currency_code', $currencyCode)->get();
+    }
 }

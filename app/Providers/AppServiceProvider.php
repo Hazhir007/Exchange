@@ -7,13 +7,15 @@ use App\Domain\Currency\CurrencyInterface;
 use App\Domain\ExternalApi\ClientRequest;
 use App\Domain\ExternalApi\ExchangeExternalApiInterface;
 use App\Domain\ExternalApi\NavasanApi\NavasanApi;
-use App\Domain\Money\Factory\Currencies\EUR;
-use App\Domain\Money\Factory\Currencies\IRR;
-use App\Domain\Money\Factory\Currencies\USD;
+use App\Domain\Money\Factory\Wallets\EUR;
+use App\Domain\Money\Factory\Wallets\IRR;
+use App\Domain\Money\Factory\Wallets\USD;
 use App\Domain\Money\Factory\MoneyFactory;
 use App\Domain\Money\Factory\MoneyFactoryInterface;
 use App\Domain\Money\Money;
 use App\Domain\Money\MoneyInterface;
+use App\Domain\Wallet\Wallet;
+use App\Domain\Wallet\WalletInterface;
 use App\Models\PairCurrency;
 use App\Models\User;
 use App\Repositories\PairCurrencyRepository\PairCurrencyRepository;
@@ -58,6 +60,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             ExchangeExternalApiInterface::class,
             NavasanApi::class
+        );
+
+
+        $this->app->bind(
+            WalletInterface::class,
+            Wallet::class
         );
 
 //        $this->app->bind(

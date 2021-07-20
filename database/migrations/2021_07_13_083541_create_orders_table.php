@@ -15,6 +15,7 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->references('id')->on('users');
             $table->string('from_currency_code', 3);
             $table->float('from_currency_amount', 12, 6);
             $table->float('from_currency_formatted_amount', 12, 6);
@@ -26,6 +27,7 @@ class CreateOrdersTable extends Migration
             $table->float('formatted_fee_amount_in_irr', 12, 6);
             $table->string('tracking_code');
             $table->timestamps();
+
         });
     }
 

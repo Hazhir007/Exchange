@@ -18,9 +18,9 @@ class MoneyConverterController extends Controller
     {
         $fromCurrency = resolve(strtoupper($request->from_currency));
         $toCurrency = resolve(strtoupper($request->to_currency));
-        $usd = $fromCurrency->create($request->amount, 'user');
-        $eur = $toCurrency->create(0, null);
-        $result = $moneyConverter->convert($usd, $eur);
+        $fromCurrency = $fromCurrency->create($request->amount, 'user');
+        $toCurrency = $toCurrency->create(0, null);
+        $result = $moneyConverter->convert($fromCurrency, $toCurrency);
 
         return $this->JsonResponseSuccess('your order request has been submitted',
             200, new CurrencyConverterResource($result));

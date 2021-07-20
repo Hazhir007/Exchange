@@ -6,6 +6,8 @@ use App\Repositories\PairCurrencyRepository\PairCurrencyRepository;
 use App\Repositories\PairCurrencyRepository\PairCurrencyRepositoryInterface;
 use App\Repositories\UserRepository\UserRepository;
 use App\Repositories\UserRepository\UserRepositoryInterface;
+use App\Repositories\WalletRepository\WalletRepository;
+use App\Repositories\WalletRepository\WalletRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -25,6 +27,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             PairCurrencyRepositoryInterface::class,
             PairCurrencyRepository::class
+        );
+
+        $this->app->bind(
+            WalletRepositoryInterface::class,
+            WalletRepository::class
         );
     }
 

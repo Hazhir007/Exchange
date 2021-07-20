@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Domain\Money\Factory\Currencies;
+namespace App\Domain\Money\Factory\Wallets;
 
 
 use App\Domain\Money\Factory\MoneyFactoryInterface;
@@ -14,7 +14,7 @@ class IRR
 
     }
 
-    public function create(int $amount, ?string $from): MoneyInterface
+    public function create(int $amount, ?string $from = null): MoneyInterface
     {
         return $this->moneyFactory->create('Iranian Rial', 'IRR', 0, $amount, $from);
     }

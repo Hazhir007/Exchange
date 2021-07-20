@@ -100,4 +100,13 @@ class Money implements MoneyInterface
         return false;
     }
 
+    public function subtract(int $amount)
+    {
+        $this->amount = $this->amount - $amount;
+    }
+
+    public function add(int $amount)
+    {
+        $this->amount = $this->amount + $amount;
+    }
 }

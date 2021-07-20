@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Domain\Money\Factory\Currencies;
+namespace App\Domain\Money\Factory\Wallets;
 
 
 use App\Domain\Currency\CurrencyInterface;
@@ -16,7 +16,7 @@ class EUR
 
     }
 
-    public function create(int $amount , ?string $from): MoneyInterface
+    public function create(int $amount , ?string $from = null): MoneyInterface
     {
         return $this->money->create('Euro', 'EUR', 2, $amount, $from);
     }

@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\V1\ExternalApi\NavasanApiController;
 use App\Http\Controllers\Api\V1\MoneyConverter\MoneyConverterController;
 use App\Http\Controllers\Api\V1\Order\AddOrderController;
 use App\Http\Controllers\Api\V1\PayOrder\PayOrderController;
+use App\Http\Controllers\Api\V1\Wallet\WalletCreateController;
 use App\Http\Controllers\Api\V1\Wallet\DepositWalletController;
 use App\Http\Controllers\Api\V1\Wallet\WithdrawWalletController;
 use App\Http\Controllers\Api\V1\WelcomeController;
@@ -45,8 +46,9 @@ Route::group(['middleware' => 'cors'], function () {
         Route::post('/order/pay', PayOrderController::class);
         Route::post('/order/add', AddOrderController::class);
 
+        Route::post('/wallet/create', WalletCreateController::class);
         Route::post('/wallet/deposit', DepositWalletController::class);
-        Route::get('/wallet/withdraw', WithdrawWalletController::class);
+        Route::post('/wallet/withdraw', WithdrawWalletController::class);
 
 
     });

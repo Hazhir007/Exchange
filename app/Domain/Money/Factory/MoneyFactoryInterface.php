@@ -11,5 +11,5 @@ interface MoneyFactoryInterface
 {
     public function __construct();
 
-    public function create(string $name, string $code, int $scale, ?int $amount, ?string $from): MoneyInterface;
+    public function create(string $name, string $code, int $scale, ?int $amount, ?string $from = null): MoneyInterface;
 }

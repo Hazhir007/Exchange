@@ -28,7 +28,7 @@ class MoneyFactory implements MoneyFactoryInterface
      * @param int|null $amount
      * @return MoneyInterface
      */
-    public function create(string $name, string $code, int $scale, ?int $amount, ?string $from): MoneyInterface
+    public function create(string $name, string $code, int $scale, ?int $amount, ?string $from = null): MoneyInterface
     {
         $this->currency->setName($name);
         $this->currency->setCode($code);

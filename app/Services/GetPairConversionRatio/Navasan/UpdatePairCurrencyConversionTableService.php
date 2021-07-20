@@ -19,9 +19,6 @@ class UpdatePairCurrencyConversionTableService
 
     public function __invoke()
     {
-        //the line below is for dev environment when running -> php artisan schedule:work
-//        echo 'it is working fine , ok';
-
         $result = $this->structuredResult->getStructuredResult();
         $update = $this->pairCurrencyRepository->all();
 
