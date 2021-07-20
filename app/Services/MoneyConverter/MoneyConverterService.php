@@ -25,7 +25,6 @@ class MoneyConverterService implements MoneyConverterServiceInterface
         $pair = $this->pairCurrencyRepository->findPair(
             $fromCurrency->getCurrency()->getCode().$toCurrency->getCurrency()->getCode()
         );
-//        dd($pair);
 
         if (! $pair) {
             throw new ModelNotFoundException('pair can not be found');
@@ -33,15 +32,14 @@ class MoneyConverterService implements MoneyConverterServiceInterface
 
 
         $feeAmount = $fromCurrency->getAmount() * $pair->conversion_ratio * $pair->fee;
-        ;
         $result = ($fromCurrency->getAmount() * $pair->conversion_ratio) - ($feeAmount);
         $toCurrency->setTrueAmount($result);
         $toCurrency->setAmount($result, null);
-//        $result = (int)round($result, 0, PHP_ROUND_HALF_DOWN);
         $toCurrency->setFormattedAmount($toCurrency->getFormattedAmount());
         $toCurrency->setFeeAmount($feeAmount);
         $toCurrency->setFormattedFeeAmount($feeAmount);
         $toCurrency->conversionRatio = $pair->conversion_ratio;
+
         return $toCurrency;
     }
 }

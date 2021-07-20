@@ -11,14 +11,14 @@ class Order extends Model
     use HasFactory, Notifiable;
 
     protected $fillable = [
-        'fromCurrency',
-        'toCurrency',
-        'fee',
-        'paid_amount',
-        'true_amount',
-        'trackingId',
-        'status'
+        'from_currency_code',
+        'from_currency_amount',
+        'from_currency_formatted_amount',
+        'to_currency_code',
+        'to_currency_true_amount',
+        'to_currency_formatted_amount',
+        'fee_amount',
+        'formatted_fee_amount',
+        'tracking_code'
     ];
-
-
 }
