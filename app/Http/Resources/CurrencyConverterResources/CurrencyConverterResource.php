@@ -17,11 +17,14 @@ class CurrencyConverterResource extends JsonResource
     {
         $amount = $this->getAmount();
         return [
+            'conversion_ratio' => $this->conversionRatio,
             'amount' => $amount,
-            'formattedAmount' => $this->getFormattedAmount($amount),
-            'trueAmount' => $this->getTrueAmount($amount),
+            'true_amount' => $this->getTrueAmount($amount),
+            'fee_amount' => $this->getFeeAmount(),
+            'formatted_amount' => $this->getFormattedAmount($amount),
+            'formatted_fee_amount' => $this->getFormattedFeeAmount(),
             'currency_name' => $this->getCurrency()->getName(),
-            'currency_code' => $this->getCurrency()->getCode()
+            'currency_code' => $this->getCurrency()->getCode(),
 
         ];
     }

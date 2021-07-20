@@ -14,7 +14,8 @@ class Order extends Model
         'fromCurrency',
         'toCurrency',
         'fee',
-        'amount',
+        'paid_amount',
+        'true_amount',
         'trackingId',
         'status'
     ];

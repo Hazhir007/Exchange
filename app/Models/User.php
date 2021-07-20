@@ -36,6 +36,8 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $hidden = [
         'password',
+        'verification_code',
+        'email_verified_at'
     ];
 
     /**
@@ -76,6 +78,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public static function boot(): void
     {
         self::$verificationCode = random_int(111111, 999999);
+//        dd(self::$verificationCode);
         parent::boot();
         static::creating(function ($user) {
             $user->password = bcrypt($user->password);

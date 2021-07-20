@@ -12,13 +12,18 @@ use Illuminate\Http\Request;
 
 class MoneyConverterController extends Controller
 {
-    public function __invoke(MoneyConverterServiceInterface $moneyConverter, Request $request): JsonResponse
+    public function __invoke(
+        MoneyConverterServiceInterface $moneyConverter,
+        Request $request): JsonResponse
     {
         $fromCurrency = resolve(strtoupper($request->from_currency));
         $toCurrency = resolve(strtoupper($request->to_currency));
+//        dd($request->amount);
         $usd = $fromCurrency->create($request->amount, 'user');
+//        dd($usd);
         $eur = $toCurrency->create(0, null);
-        $result = $moneyConverter->convert($usd, $eur, 0.85, 0.001);
+        $result = $moneyConverter->convert($usd, $eur);
+//        dd($result);
 
         return $this->JsonResponseSuccess('your order request has been submitted',
             200, new CurrencyConverterResource($result));

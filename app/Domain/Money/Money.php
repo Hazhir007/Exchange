@@ -14,6 +14,10 @@ class Money implements MoneyInterface
 
     private float $trueAmount;
 
+    private float $feeAmount;
+
+    private float $formattedFeeAmount;
+
     public function __construct(private CurrencyInterface $currency)
     {
 
@@ -38,14 +42,34 @@ class Money implements MoneyInterface
         }
     }
 
+    public function setFeeAmount(float $feeAmount)
+    {
+        $this->feeAmount = $feeAmount;
+    }
+
+    public function getFeeAmount(): float
+    {
+        return $this->feeAmount;
+    }
+
     public function setFormattedAmount(float $formattedAmount)
     {
         $this->formattedAmount = $formattedAmount;
     }
 
-    public function getFormattedAmount(int $amount): float
+    public function getFormattedAmount(): float
     {
-        return ( $this->formattedAmount = $amount / (10**$this->currency->getScale()) );
+        return ( $this->formattedAmount = $this->amount / (10**$this->currency->getScale()) );
+    }
+
+    public function setFormattedFeeAmount(float $formattedFeeAmount)
+    {
+        $this->formattedFeeAmount = $formattedFeeAmount;
+    }
+
+    public function getFormattedFeeAmount(): float
+    {
+        return ( $this->formattedFeeAmount = $this->feeAmount / (10**$this->currency->getScale()) );
     }
 
     public function getAmount(): int

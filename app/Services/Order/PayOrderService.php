@@ -6,14 +6,14 @@ namespace App\Services\Order;
 
 use App\Repositories\UserRepository\UserRepositoryInterface;
 
-class AddOrder
+class PayOrderService
 {
     public function __construct(private UserRepositoryInterface $user)
     {
 
     }
 
-    public function addOrder()
+    public function pay()
     {
 
     }
