@@ -8,5 +8,5 @@ use App\Domain\Money\MoneyInterface;
 
 interface PaymentGatewayInterface
 {
-    public function charge();
+    public function pay(?array $data);
 }

@@ -2,9 +2,10 @@
 
 namespace App\Providers;
 
+use App\Domain\ClientRequest\ClientRequest;
+use App\Domain\ClientRequest\ClientRequestInterface;
 use App\Domain\Currency\Currency;
 use App\Domain\Currency\CurrencyInterface;
-use App\Domain\ExternalApi\ClientRequest;
 use App\Domain\ExternalApi\ExchangeExternalApiInterface;
 use App\Domain\ExternalApi\NavasanApi\NavasanApi;
 use App\Domain\Money\Factory\Wallets\EUR;
@@ -14,14 +15,6 @@ use App\Domain\Money\Factory\MoneyFactory;
 use App\Domain\Money\Factory\MoneyFactoryInterface;
 use App\Domain\Money\Money;
 use App\Domain\Money\MoneyInterface;
-use App\Domain\Wallet\Wallet;
-use App\Domain\Wallet\WalletInterface;
-use App\Models\PairCurrency;
-use App\Models\User;
-use App\Repositories\PairCurrencyRepository\PairCurrencyRepository;
-use App\Repositories\UserRepository\UserRepository;
-use App\Services\GetPairConversionRatio\Navasan\ReturnStructuredResult;
-use App\Services\GetPairConversionRatio\Navasan\UpdatePairCurrencyConversionTableService;
 use App\Services\MoneyConverter\MoneyConverterService;
 use App\Services\MoneyConverter\MoneyConverterServiceInterface;
 use GuzzleHttp\Client;
@@ -64,8 +57,8 @@ class AppServiceProvider extends ServiceProvider
 
 
         $this->app->bind(
-            WalletInterface::class,
-            Wallet::class
+            ClientRequestInterface::class,
+            ClientRequest::class
         );
 
 //        $this->app->bind(

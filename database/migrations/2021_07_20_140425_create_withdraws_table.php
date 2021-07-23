@@ -19,7 +19,6 @@ class CreateWithdrawsTable extends Migration
             $table->string('currency_code');
             $table->float('amount', 12, 6);
             $table->boolean('status')->default(false);
-            $table->unique('user_id', 'currency_code');
             $table->timestamps();
         });
     }

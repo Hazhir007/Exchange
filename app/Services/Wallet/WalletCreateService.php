@@ -5,8 +5,8 @@ namespace App\Services\Wallet;
 
 
 use App\Repositories\WalletRepository\WalletRepositoryInterface;
-use http\Exception\InvalidArgumentException;
 use Illuminate\Contracts\Auth\Authenticatable;
+use InvalidArgumentException;
 
 class WalletCreateService
 {

@@ -20,7 +20,7 @@ class CreateWalletsTable extends Migration
             $table->float('amount', 12, 6);
             $table->boolean('depositStatus')->default(true);
             $table->boolean('withdrawStatus')->default(false);
-            $table->unique('user_id', 'currency_code');
+            $table->unique(['user_id', 'currency_code'], 'wallet');
             $table->timestamps();
         });
     }

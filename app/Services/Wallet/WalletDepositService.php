@@ -4,18 +4,24 @@
 namespace App\Services\Wallet;
 
 
-use App\Repositories\WalletRepository\WalletRepositoryInterface;
+use App\Domain\Money\MoneyInterface;
+use App\Repositories\DepositRepository\DepositRepositoryInterface;
 use Illuminate\Contracts\Auth\Authenticatable;
 
 class WalletDepositService
 {
     public function __construct(
         private Authenticatable $user,
-        private WalletRepositoryInterface $walletRepository
+        private DepositRepositoryInterface $depositRepository
     ) {}
 
-    public function deposit(string $currencyCode, int $amount)
+    public function deposit(MoneyInterface $money): bool
     {
+        if ($this->user) {
+            $this->depositRepository->deposit($money, $this->user->id);
+            return true;
+        }
 
+        return false;
     }
 }
