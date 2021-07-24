@@ -2,7 +2,7 @@
 
 namespace App\Console;
 
-use App\Domain\ExternalApi\ClientRequest;
+use App\Domain\ClientRequest\ClientRequest;
 use App\Domain\ExternalApi\NavasanApi\NavasanApi;
 use App\Models\PairCurrency;
 use App\Repositories\PairCurrencyRepository\PairCurrencyRepository;

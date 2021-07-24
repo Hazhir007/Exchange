@@ -21,6 +21,7 @@ class Order extends Model
         'fee_amount',
         'formatted_fee_amount',
         'formatted_fee_amount_in_irr',
-        'tracking_code'
+        'tracking_code',
+        'conversion_ratio'
     ];
 }

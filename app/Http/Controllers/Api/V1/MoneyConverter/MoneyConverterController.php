@@ -10,6 +10,7 @@ use App\Services\MoneyConverter\MoneyConverterServiceInterface;
 use App\Services\Order\AddOrderService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class MoneyConverterController extends Controller
 {
@@ -24,9 +25,11 @@ class MoneyConverterController extends Controller
         $toCurrency = $toCurrency->create(0, null);
         $result = $moneyConverter->convert($fromCurrency, $toCurrency);
 
-        $addOrderService->addOrder($result);
+        if ($addOrderService->addOrder($result)) {
+            return $this->JsonResponseSuccess('your order request has been submitted',
+                200, new CurrencyConverterResource($result));
+        }
+            return $this->JsonResponseError('please deposit into your wallet', 400);
 
-        return $this->JsonResponseSuccess('your order request has been submitted',
-            200, new CurrencyConverterResource($result));
     }
 }

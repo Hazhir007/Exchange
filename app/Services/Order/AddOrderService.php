@@ -24,6 +24,9 @@ class AddOrderService
     {
         if ($this->user) {
             $this->repository->addOrder($orderData, $this->user->id);
+            return true;
         }
+
+        return false;
     }
 }

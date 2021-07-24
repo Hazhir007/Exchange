@@ -7,7 +7,6 @@ namespace App\Domain\ExternalApi\NavasanApi;
 
 use App\Domain\ClientRequest\ClientRequestInterface;
 use App\Domain\ExternalApi\ExchangeExternalApiInterface;
-use GuzzleHttp\Exception\GuzzleException;
 
 class NavasanApi implements ExchangeExternalApiInterface
 {
