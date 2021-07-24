@@ -61,4 +61,12 @@ class OrderRepository implements OrderRepositoryInterface
         return false;
 //        throw new \InvalidArgumentException('please check your wallet amount');
     }
+
+    public function findOrder(int $trackingCode)
+    {
+        return $this->model
+            ->where('tracking_code', $trackingCode)
+            ->get()
+            ->first();
+    }
 }

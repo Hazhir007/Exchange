@@ -9,16 +9,12 @@ use App\Http\Controllers\Api\V1\Authentication\UserRegistrationController;
 use App\Http\Controllers\Api\V1\Authentication\UserResetPasswordController;
 use App\Http\Controllers\Api\V1\ExternalApi\NavasanApiController;
 use App\Http\Controllers\Api\V1\MoneyConverter\MoneyConverterController;
-use App\Http\Controllers\Api\V1\PayOrder\PayOrderController;
+use App\Http\Controllers\Api\V1\TrackOrder\TrackOrderController;
 use App\Http\Controllers\Api\V1\Wallet\WalletCreateController;
 use App\Http\Controllers\Api\V1\Wallet\DepositWalletController;
 use App\Http\Controllers\Api\V1\Wallet\WithdrawWalletController;
 use App\Http\Controllers\Api\V1\WelcomeController;
 use Illuminate\Support\Facades\Route;
-
-
-
-
 
 
 
@@ -42,7 +38,7 @@ Route::group(['middleware' => 'cors'], function () {
 
         Route::post('/currency-conversion/convert', MoneyConverterController::class);
 
-        Route::post('/order/pay', PayOrderController::class);
+        Route::post('/order/track', TrackOrderController::class);
 
         Route::post('/wallet/create', WalletCreateController::class);
         Route::post('/wallet/deposit', DepositWalletController::class);
