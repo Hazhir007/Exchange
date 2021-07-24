@@ -5,6 +5,7 @@ namespace App\Repositories\WithdrawRepository;
 
 
 use App\Domain\Money\MoneyInterface;
+use App\Repositories\WalletRepository\WalletRepositoryInterface;
 
 interface WithdrawRepositoryInterface
 {

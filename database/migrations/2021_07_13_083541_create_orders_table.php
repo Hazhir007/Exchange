@@ -25,6 +25,7 @@ class CreateOrdersTable extends Migration
             $table->float('fee_amount', 12, 6);
             $table->float('formatted_fee_amount', 12, 6);
             $table->float('formatted_fee_amount_in_irr', 12, 6);
+            $table->float('conversion_ratio', 12, 6);
             $table->string('tracking_code');
             $table->timestamps();
 

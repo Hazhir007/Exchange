@@ -25,14 +25,8 @@ class WalletDepositService
     {
         if ($this->user) {
             $result =  $this->depositRepository->deposit($money, $this->user->id);
-//            $temp = $this->walletRepository->updateAmount($this->user->id);
             $temp = $this->walletRepository->updateAmount($this->user->id);
-            dd($temp);
             return $result;
-            //send deposited event and update the wallet amount
-
-
-            //send deposited email to user
         }
 
         throw new Exception('could not deposit');

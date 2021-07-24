@@ -11,6 +11,7 @@ class Order extends Model
     use HasFactory, Notifiable;
 
     protected $fillable = [
+        'user_id',
         'from_currency_code',
         'from_currency_amount',
         'from_currency_formatted_amount',
@@ -19,6 +20,7 @@ class Order extends Model
         'to_currency_formatted_amount',
         'fee_amount',
         'formatted_fee_amount',
+        'formatted_fee_amount_in_irr',
         'tracking_code'
     ];
 }

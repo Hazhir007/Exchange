@@ -28,7 +28,7 @@ class Money implements MoneyInterface
         $this->trueAmount = $amount / (10**$this->currency->getScale());
     }
 
-    public function getTrueAmount(float $amount): float
+    public function getTrueAmount(): float
     {
         return $this->trueAmount;
     }

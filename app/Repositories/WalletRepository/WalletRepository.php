@@ -30,6 +30,23 @@ class WalletRepository implements WalletRepositoryInterface
         ])->refresh();
     }
 
+
+    public function getWallets(int $userId)
+    {
+        return $this->model
+            ->where('user_id', $userId)
+            ->get();
+    }
+
+    public function findWallet(int $userId, string $currencyCode)
+    {
+        return $this->model
+            ->where('user_id', $userId)
+            ->where('currency_code', $currencyCode)
+            ->get()
+            ->first();
+    }
+
     public function updateAmount(int $userId): array
     {
         $wallets = DB::select(DB::raw(

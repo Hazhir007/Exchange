@@ -4,7 +4,7 @@
 namespace App\Services\Order;
 
 
-use App\Repositories\UserRepository\UserRepositoryInterface;
+use App\Repositories\OrderRepository\OrderRepositoryInterface;
 use Illuminate\Contracts\Auth\Authenticatable;
 
 class AddOrderService
@@ -15,18 +15,15 @@ class AddOrderService
      */
     public function __construct(
         private Authenticatable $user,
-        private UserRepositoryInterface $repository)
+        private OrderRepositoryInterface $repository)
     {
 
     }
 
-    public function addOrder(array $orderData)
+    public function addOrder($orderData)
     {
-
         if ($this->user) {
-            $this->repository->addOrder(
-                $orderData['user_id']
-            );
+            $this->repository->addOrder($orderData, $this->user->id);
         }
     }
 }

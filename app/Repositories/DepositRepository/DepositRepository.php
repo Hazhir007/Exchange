@@ -5,7 +5,7 @@ namespace App\Repositories\DepositRepository;
 
 
 use App\Domain\Money\MoneyInterface;
-use App\Models\deposit;
+use App\Models\Deposit;
 
 
 class DepositRepository implements DepositRepositoryInterface
@@ -24,9 +24,4 @@ class DepositRepository implements DepositRepositoryInterface
             'amount' => $money->getAmount()
         ])->refresh();
     }
-
-//    public function updateWalletAmount(WalletRepository $walletRepository)
-//    {
-//        return $walletRepository->
-//    }
 }

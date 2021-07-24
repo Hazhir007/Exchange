@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Repositories\DepositRepository\DepositRepository;
 use App\Repositories\DepositRepository\DepositRepositoryInterface;
+use App\Repositories\OrderRepository\OrderRepository;
+use App\Repositories\OrderRepository\OrderRepositoryInterface;
 use App\Repositories\PairCurrencyRepository\PairCurrencyRepository;
 use App\Repositories\PairCurrencyRepository\PairCurrencyRepositoryInterface;
 use App\Repositories\UserRepository\UserRepository;
@@ -46,6 +48,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             WithdrawRepositoryInterface::class,
             WithdrawRepository::class
+        );
+
+        $this->app->bind(
+            OrderRepositoryInterface::class,
+            OrderRepository::class
         );
     }
 
