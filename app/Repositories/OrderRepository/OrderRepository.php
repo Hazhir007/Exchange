@@ -6,14 +6,18 @@ namespace App\Repositories\OrderRepository;
 
 use App\Domain\Money\MoneyInterface;
 use App\Models\Order;
+use App\Repositories\DepositRepository\DepositRepositoryInterface;
 use App\Repositories\WalletRepository\WalletRepository;
+use App\Repositories\WithdrawRepository\WithdrawRepositoryInterface;
 
 class OrderRepository implements OrderRepositoryInterface
 {
 
     public function __construct(
         private Order $model,
-        private WalletRepository $walletRepository
+        private WalletRepository $walletRepository,
+        private DepositRepositoryInterface $depositRepository,
+        private WithdrawRepositoryInterface $withdrawRepository
     ) {
 
     }
@@ -28,7 +32,8 @@ class OrderRepository implements OrderRepositoryInterface
         $wallet = $this->walletRepository->findWallet($userId,$orderData->fromCurrency->getCurrency()->getCode());
 
         if ($wallet->amount >= $orderData->fromCurrency->getAmount()) {
-            return $this->model->create([
+
+            $this->model->create([
                 'user_id' => $userId,
                 'from_currency_code' => $orderData->fromCurrency->getCurrency()->getCode(),
                 'from_currency_amount' => $orderData->fromCurrency->getAmount(),
@@ -42,10 +47,18 @@ class OrderRepository implements OrderRepositoryInterface
                 'conversion_ratio' => $orderData->conversionRatio,
                 'tracking_code' => random_int(1000, 9999).time()
             ]);
+
+            $this->withdrawRepository->withdraw($orderData->fromCurrency, $userId);
+
+            $this->depositRepository->deposit($orderData, $userId);
+
+            $this->walletRepository->updateAmount($userId);
+
+            return true;
+
         }
 
-
-
-        throw new \InvalidArgumentException('please check your wallet amount');
+        return false;
+//        throw new \InvalidArgumentException('please check your wallet amount');
     }
 }
