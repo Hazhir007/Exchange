@@ -1,0 +1,56 @@
+select user_id, (coalesce(total_deposits,0) - coalesce(total_withdraws,0)) as amount, dcc as currency_code from
+
+          (
+
+            ( select rd.user_id, sum(rd.amount) as total_deposits, rd.currency_code as dcc from
+                (select * from deposits as d where d.user_id =1) as rd
+                group by dcc
+            ) as rd2
+
+           left join
+
+           ( select sum(rw.amount) as total_withdraws, rw.currency_code as wcc from
+            (select * from withdraws as w where w.user_id =1) as rw
+            group by wcc
+           ) as rw2
+
+           on rd2.dcc = rw2.wcc
+
+          ) group by currency_code;
+
+
+
+
+
+
+select wallet.user_id, coalesce(wallet.total_deposits,0) - coalesce(wallet.total_withdraws,0) as amount, wallet.dcc as currency_code from
+
+      (select * from
+
+          (
+
+            ( select rd.user_id, sum(rd.amount) as total_deposits, rd.currency_code as dcc from
+                (select * from deposits as d where d.user_id =1) as rd
+                group by dcc
+            ) as rd2
+
+           left join
+
+           ( select sum(rw.amount) as total_withdraws, rw.currency_code as wcc from
+            (select * from withdraws as w where w.user_id =1) as rw
+            group by wcc
+           ) as rw2
+
+           on rd2.dcc = rw2.wcc
+
+          )
+       )
+
+       as wallet group by currency_code;
+
+
+
+
+
+
+

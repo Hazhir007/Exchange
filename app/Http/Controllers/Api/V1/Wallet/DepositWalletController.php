@@ -14,6 +14,7 @@ class DepositWalletController extends Controller
         $from_currency = resolve(strtoupper($request->currency_code));
         $money = $from_currency->create($request->amount, 'user');
         $result = $service->deposit($money);
+//        dd($result);
         return $this->JsonResponseSuccess('deposit success', 201, new DepositCurrencyResource($result));
     }
 }

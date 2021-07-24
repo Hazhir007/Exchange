@@ -6,7 +6,6 @@ namespace App\Repositories\DepositRepository;
 
 use App\Domain\Money\MoneyInterface;
 use App\Models\deposit;
-use App\Repositories\WalletRepository\WalletRepository;
 
 
 class DepositRepository implements DepositRepositoryInterface
